@@ -1,48 +1,65 @@
-'use client'
-import { Button, Callout, TextField, Text } from '@radix-ui/themes'
+"use client";
+import { Button, Callout, TextField, Text } from "@radix-ui/themes";
 import SimpleMDE from "react-simplemde-editor";
-import { useForm, Controller } from 'react-hook-form'
-import axios from 'axios';
+import { useForm, Controller } from "react-hook-form";
+import axios from "axios";
 import "easymde/dist/easymde.min.css";
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
-import { zodResolver } from '@hookform/resolvers/zod'
-import { createIssueSchema } from '@/app/validationSchemas';
-import { z } from 'zod'
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { createIssueSchema } from "@/app/validationSchemas";
+import { z } from "zod";
+import ErrorMessage from "@/app/components/ErrorMessage";
 
-type IssueForm = z.infer<typeof createIssueSchema>
-
+type IssueForm = z.infer<typeof createIssueSchema>;
 
 const NewIssuePage = () => {
-    const router =  useRouter()
-    const { register, control, handleSubmit, formState: {errors } } = useForm<IssueForm>({resolver: zodResolver(createIssueSchema)})
-const [error, setError] = useState('')
+  const router = useRouter();
+  const {
+    register,
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<IssueForm>({ resolver: zodResolver(createIssueSchema) });
+  const [error, setError] = useState("");
 
-    return (
-        <div className='max-w-xl'>
-            {error && <Callout.Root color="red" className='mb-5'>
-                <Callout.Text>{error}</Callout.Text></Callout.Root>}
-      <form className='space-y-3'
-          onSubmit={handleSubmit(async (data) => {
-              try {
-                 await axios.post('/api/issues', data)
-              router.push('/issues')
-              } catch (error) {
-                  console.log('error', error)
-                setError('an unexpected error has occurred')
-              }
-             
+  return (
+    <div className="max-w-xl">
+      {error && (
+        <Callout.Root color="red" className="mb-5">
+          <Callout.Text>{error}</Callout.Text>
+        </Callout.Root>
+      )}
+      <form
+        className="space-y-3"
+        onSubmit={handleSubmit(async (data) => {
+          try {
+            await axios.post("/api/issues", data);
+            router.push("/issues");
+          } catch (error) {
+            console.log("error", error);
+            setError("an unexpected error has occurred");
+          }
+        })}
+      >
+        <TextField.Root>
+          <TextField.Input placeholder="Title" {...register("title")} />
+        </TextField.Root>
+        <ErrorMessage>{errors.title?.message}</ErrorMessage>
+        <Controller
+          name="description"
+          control={control}
+          render={({ field }) => (
+            <SimpleMDE placeholder="description" {...field} />
+          )}
+        />
 
-          } )}>
-          <TextField.Root>
-              <TextField.Input placeholder='Title' {...register('title')} />
-                </TextField.Root>
-                {errors.title && <Text color='red'>{errors.title.message }</Text>}
-          <Controller name='description' control={control} render={({field}) => <SimpleMDE placeholder='description' {...field} />} />
-                {errors.description && <Text color='red'>{errors.description.message }</Text>}
-          <Button>Submit New Issue</Button>
-    </form></div>
-  )
-}
+        <ErrorMessage>{errors.description?.message}</ErrorMessage>
 
-export default NewIssuePage
+        <Button>Submit New Issue</Button>
+      </form>
+    </div>
+  );
+};
+
+export default NewIssuePage;
