@@ -12,13 +12,12 @@ const IssuesPage = () => {
       </Button>
       <Table.Root>
         <Table.Header>
-          <Table.Body>
-            <Table.Row>
-              <TableColumnHeaderCell>Issue</TableColumnHeaderCell>
-              <TableColumnHeaderCell>Status</TableColumnHeaderCell>
-              <TableColumnHeaderCell>Data</TableColumnHeaderCell>
-            </Table.Row>
-          </Table.Body>
+          <Table.Row>
+            <TableColumnHeaderCell>Issue</TableColumnHeaderCell>
+            <TableColumnHeaderCell>Status</TableColumnHeaderCell>
+            <TableColumnHeaderCell>Data</TableColumnHeaderCell>
+          </Table.Row>
+          <Table.Body>{issues}</Table.Body>
         </Table.Header>
       </Table.Root>
     </div>
