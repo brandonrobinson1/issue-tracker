@@ -1,12 +1,7 @@
 import React from "react";
-import {
-  Button,
-  Table,
-  TableColumnHeaderCell,
-  TableRow,
-} from "@radix-ui/themes";
-import Link from "next/link";
+import { Table, TableColumnHeaderCell, TableRow } from "@radix-ui/themes";
 import prisma from "@/prisma/client";
+import Link from "../components/Link";
 import IssuesStatusBadge from "../components/IssuesStatusBadge";
 import delay from "delay";
 import IssueActions from "./IssueActions";
