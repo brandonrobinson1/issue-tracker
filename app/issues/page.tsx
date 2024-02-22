@@ -1,14 +1,11 @@
-import React from "react";
-import { Table, TableColumnHeaderCell, TableRow } from "@radix-ui/themes";
 import prisma from "@/prisma/client";
-import Link from "../components/Link";
-import IssuesStatusBadge from "../components/IssuesStatusBadge";
-import delay from "delay";
+import { Table, TableColumnHeaderCell, TableRow } from "@radix-ui/themes";
+import { IssuesStatusBadge, Link } from "@/app/components";
 import IssueActions from "./IssueActions";
+import { useRouter } from "next/navigation";
 
 const IssuesPage = async () => {
   const issues = await prisma.issue.findMany();
-  await delay(2000);
   return (
     <div>
       <IssueActions />
@@ -16,8 +13,12 @@ const IssuesPage = async () => {
         <Table.Header>
           <Table.Row>
             <TableColumnHeaderCell>Issue</TableColumnHeaderCell>
-            <TableColumnHeaderCell>Status</TableColumnHeaderCell>
-            <TableColumnHeaderCell>Data</TableColumnHeaderCell>
+            <TableColumnHeaderCell className="hidden md:table-cell">
+              Status
+            </TableColumnHeaderCell>
+            <TableColumnHeaderCell className="hidden md:table-cell">
+              Data
+            </TableColumnHeaderCell>
           </Table.Row>
         </Table.Header>
         <Table.Body>
@@ -25,11 +26,17 @@ const IssuesPage = async () => {
             <TableRow key={issue.id}>
               <Table.Cell>
                 <Link href={`/issues/${issue.id}`}>{issue.title}</Link>
+                <div className="block md:hidden">
+                  <IssuesStatusBadge status={issue.status} />
+                </div>
               </Table.Cell>
-              <Table.Cell>
+
+              <Table.Cell className="hidden md:table-cell">
                 <IssuesStatusBadge status={issue.status} />
               </Table.Cell>
-              <Table.Cell>{issue.createdAt.toDateString()}</Table.Cell>
+              <Table.Cell className="hidden md:table-cell">
+                {issue.createdAt.toDateString()}
+              </Table.Cell>
             </TableRow>
           ))}
         </Table.Body>
