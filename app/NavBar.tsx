@@ -4,9 +4,10 @@ import Link from "next/link";
 import { FaBug } from "react-icons/fa";
 import { usePathname } from "next/navigation";
 import classnames from "classnames";
-
+import { useSession } from "next-auth/react";
 const NavBar = () => {
   const currentPath = usePathname();
+  const status = useSession();
 
   const links = [
     { label: "Dashboard", href: "/" },
