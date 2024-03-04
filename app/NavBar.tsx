@@ -58,6 +58,7 @@ const NavBar = () => {
                     radius="full"
                     fallback="?"
                     className="cursor-pointer"
+                    referrerPolicy="no-referrer"
                   />
                 </DropdownMenu.Trigger>
                 <DropdownMenu.Content>
