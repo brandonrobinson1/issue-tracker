@@ -8,7 +8,6 @@ import { useSession } from "next-auth/react";
 import {
   Avatar,
   Box,
-  Button,
   Container,
   DropdownMenu,
   Flex,
@@ -20,7 +19,7 @@ const NavBar = () => {
     <nav className="border-b mb-5 px-5 py-3">
       <Container>
         <Flex justify="between">
-          <Flex align="center" gap="3">
+          <Flex align="center" gap="2">
             {" "}
             <Link href={"/"}>
               <FaBug />
@@ -46,7 +45,7 @@ const NavLinks = () => {
     <ul className="flex space-x-6">
       {links.map((link) => (
         <li key={link.href}>
-          <li
+          <p
             className={classnames({
               "nav-link": true,
               "!text-zinc-900": link.href === currentPath,
@@ -58,7 +57,7 @@ const NavLinks = () => {
             }}
           >
             {link.label}
-          </li>
+          </p>
         </li>
       ))}
     </ul>
