@@ -77,3 +77,4 @@ const columns: {
 export const columnNames = columns.map((column) => column.value);
 
 export default IssueTable;
+export const dynamic = "force-dynamic";

@@ -45,7 +45,6 @@ const IssuesStatusBadge = ({ status, issueId, title, description }: Props) => {
   const [isSettingStatus, setIsSettingStatus] = useState(false);
 
   const handleClick = async () => {
-    console.log(issueId);
     let newStatus: Status;
     switch (currentStatus) {
       case "OPEN":
@@ -69,8 +68,7 @@ const IssuesStatusBadge = ({ status, issueId, title, description }: Props) => {
       setIsSettingStatus(true);
 
       await axios.patch("/api/issues/" + issueId, {
-        title: title,
-        description: description,
+        id: issueId,
         status: newStatus,
       });
       setCurrentStatus(newStatus);
@@ -83,23 +81,22 @@ const IssuesStatusBadge = ({ status, issueId, title, description }: Props) => {
 
   return (
     <>
-      <Tooltip
+      {/* <Tooltip
         className="!opacity-50"
         delayDuration={0}
         content={`Switch Status to: ${statusMap[currentStatus].nextLabel}`}
         disableHoverableContent={true}
+      > */}
+      <Badge
+        className="transition-all duration-300 hover:cursor-pointer hover:shadow"
+        variant={statusMap[currentStatus].variant}
+        onClick={handleClick}
+        radius="large"
+        color={statusMap[currentStatus].color}
       >
-        <Badge
-          className="transition-all duration-300 hover:cursor-pointer hover:shadow"
-          variant={statusMap[currentStatus].variant}
-          onClick={handleClick}
-          radius="large"
-          color={statusMap[currentStatus].color}
-        >
-          {statusMap[currentStatus].label}{" "}
-          {isSettingStatus ? <Spinner /> : null}
-        </Badge>
-      </Tooltip>
+        {statusMap[currentStatus].label} {isSettingStatus ? <Spinner /> : null}
+      </Badge>
+      {/* </Tooltip> */}
     </>
   );
 };

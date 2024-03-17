@@ -12,11 +12,12 @@ export async function PATCH(
 
   if (!session) return NextResponse.json({}, { status: 401 });
   const body = await request.json();
+
   const validation = patchIssueSchema.safeParse(body);
   if (!validation.success) {
     return NextResponse.json(validation.error.format(), { status: 400 });
   }
-  const { assignedToUserId, title, description } = body;
+  const { status, assignedToUserId, title, description } = body;
 
   if (assignedToUserId) {
     const user = prisma.user.findUnique({ where: { id: assignedToUserId } });
@@ -34,7 +35,7 @@ export async function PATCH(
 
   const updatedIssue = await prisma.issue.update({
     where: { id: issue.id },
-    data: { title, description, assignedToUserId },
+    data: { title, description, status, assignedToUserId },
   });
 
   return NextResponse.json(updatedIssue);
