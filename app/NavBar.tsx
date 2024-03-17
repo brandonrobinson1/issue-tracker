@@ -2,12 +2,13 @@
 import React from "react";
 import Link from "next/link";
 import { FaBug } from "react-icons/fa";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import classnames from "classnames";
 import { useSession } from "next-auth/react";
 import {
   Avatar,
   Box,
+  Button,
   Container,
   DropdownMenu,
   Flex,
@@ -35,6 +36,7 @@ const NavBar = () => {
 
 const NavLinks = () => {
   const currentPath = usePathname();
+  const router = useRouter();
 
   const links = [
     { label: "Dashboard", href: "/" },
@@ -44,15 +46,19 @@ const NavLinks = () => {
     <ul className="flex space-x-6">
       {links.map((link) => (
         <li key={link.href}>
-          <Link
+          <li
             className={classnames({
               "nav-link": true,
               "!text-zinc-900": link.href === currentPath,
+              "cursor-pointer": true,
             })}
-            href={link.href}
+            onClick={() => {
+              router.push(link.href);
+              router.refresh();
+            }}
           >
             {link.label}
-          </Link>
+          </li>
         </li>
       ))}
     </ul>
