@@ -4,7 +4,7 @@ import { Skeleton } from "@/app/components";
 import IssueActions from "./IssueActions";
 
 const LoadingIssuesPage = () => {
-  const issues = [1, 2, 3, 4, 5];
+  const issues: number[] = [1, 2, 3, 4, 5];
   return (
     <>
       <IssueActions />
