@@ -37,7 +37,7 @@ const NavLinks = () => {
   const currentPath = usePathname();
   const router = useRouter();
 
-  const links = [
+  const links: { label: string; href: string }[] = [
     { label: "Dashboard", href: "/" },
     { label: "Issues", href: "/issues/list" },
   ];
