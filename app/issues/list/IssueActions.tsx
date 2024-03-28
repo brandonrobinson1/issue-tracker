@@ -3,7 +3,7 @@ import Link from "next/link";
 import React from "react";
 import IssueStatusFilter from "./IssueStatusFilter";
 
-const IssueActions = () => {
+const IssueActions: () => React.JSX.Element = () => {
   return (
     <Flex justify="end">
       {/* <IssueStatusFilter /> */}
