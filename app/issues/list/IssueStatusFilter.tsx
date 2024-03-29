@@ -11,7 +11,7 @@ const statuses: { label: string; value?: Status }[] = [
   { label: "Closed", value: "CLOSED" },
 ];
 
-const IssueStatusFilter = () => {
+const IssueStatusFilter: () => React.JSX.Element = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   return (
